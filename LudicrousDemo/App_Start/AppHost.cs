@@ -8,6 +8,7 @@ using ServiceStack.CacheAccess;
 using ServiceStack.CacheAccess.Providers;
 using ServiceStack.Mvc;
 using ServiceStack.OrmLite;
+using ServiceStack.Redis;
 using ServiceStack.ServiceInterface;
 using ServiceStack.ServiceInterface.Auth;
 using ServiceStack.ServiceInterface.ServiceModel;
@@ -44,7 +45,8 @@ namespace LudicrousDemo.App_Start
 		{
 			//Set JSON web services to return idiomatic JSON camelCase properties
 			ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
-		
+            // ServiceStack.Text.JsConfig.EmitLowercaseUnderscoreNames = true;
+            
 			//Configure User Defined REST Paths
 			Routes
 			  .Add<Hello>("/hello")
@@ -58,7 +60,9 @@ namespace LudicrousDemo.App_Start
 			//ConfigureAuth(container);
 
 			//Register all your dependencies
-			container.Register(new TodoRepository());			
+			container.Register(new TodoRepository());
+
+            container.Register<IRedisClientsManager>(new BasicRedisClientManager("localhost:6379"));
 
 			//Set MVC to use the same Funq IOC as ServiceStack
 			ControllerBuilder.Current.SetControllerFactory(new FunqControllerFactory(container));
