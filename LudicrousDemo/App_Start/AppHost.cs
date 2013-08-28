@@ -1,17 +1,8 @@
-using System;
-using System.Linq;
-using System.Configuration;
-using System.Collections.Generic;
 using System.Web.Mvc;
-using ServiceStack.Configuration;
-using ServiceStack.CacheAccess;
-using ServiceStack.CacheAccess.Providers;
+using LudicrousDemo.Services;
 using ServiceStack.Mvc;
-using ServiceStack.OrmLite;
 using ServiceStack.Redis;
-using ServiceStack.ServiceInterface;
 using ServiceStack.ServiceInterface.Auth;
-using ServiceStack.ServiceInterface.ServiceModel;
 using ServiceStack.WebHost.Endpoints;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(LudicrousDemo.App_Start.AppHost), "Start")]
@@ -39,7 +30,7 @@ namespace LudicrousDemo.App_Start
 		: AppHostBase
 	{		
 		public AppHost() //Tell ServiceStack the name and where to find your web services
-			: base("StarterTemplate ASP.NET Host", typeof(HelloService).Assembly) { }
+			: base("Ludicrous Demo", typeof(CustomerService).Assembly) { }
 
 		public override void Configure(Funq.Container container)
 		{
@@ -48,9 +39,9 @@ namespace LudicrousDemo.App_Start
             // ServiceStack.Text.JsConfig.EmitLowercaseUnderscoreNames = true;
             
 			//Configure User Defined REST Paths
-			Routes
-			  .Add<Hello>("/hello")
-			  .Add<Hello>("/hello/{Name*}");
+            //Routes
+            //  .Add<Hello>("/hello")
+            //  .Add<Hello>("/hello/{Name*}");
 
 			//Uncomment to change the default ServiceStack configuration
 			//SetConfig(new EndpointHostConfig {
@@ -60,7 +51,7 @@ namespace LudicrousDemo.App_Start
 			//ConfigureAuth(container);
 
 			//Register all your dependencies
-			container.Register(new TodoRepository());
+            //container.Register(new TodoRepository());
 
             container.Register<IRedisClientsManager>(new BasicRedisClientManager("localhost:6379"));
 
