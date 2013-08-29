@@ -2,8 +2,8 @@
 
 namespace LudicrousDemo.Common
 {
-    [Route("/customer")]
-    [Route("/customer/{id}")]
+    [Route("/customer", "POST,OPTIONS")]
+    [Route("/customer/{id}", "GET,PUT,DELETE")]
     public class Customer : IReturn<Customer>
     {
         public long Id { get; set; }

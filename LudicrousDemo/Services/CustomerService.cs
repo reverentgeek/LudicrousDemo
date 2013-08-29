@@ -2,6 +2,7 @@
 using LudicrousDemo.Common;
 using ServiceStack.OrmLite;
 using ServiceStack.ServiceInterface;
+using ServiceStack.ServiceInterface.Cors;
 
 namespace LudicrousDemo.Services
 {
@@ -41,6 +42,12 @@ namespace LudicrousDemo.Services
         {
             if (customer.Id == default (long)) return;
             Redis.As<Customer>().DeleteById(customer.Id);
+        }
+
+        [EnableCors("*", "GET,POST,PUT,DELETE,OPTIONS")]
+        public void Options(Customer customer)
+        {
+            
         }
     }
 }
