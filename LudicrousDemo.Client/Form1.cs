@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using LudicrousDemo.Common;
 using ServiceStack.ServiceClient.Web;
@@ -30,7 +24,7 @@ namespace LudicrousDemo.Client
             listView1.Items.Clear();
             ClearCustomer();
             var client = new JsonServiceClient(BaseUrl);
-            var customers = client.Get<List<Customer>>(new CustomerSearch());
+            var customers = client.Get(new CustomerSearch());
             foreach (var customer in customers)
             {
                 var item = new ListViewItem {Text = customer.UserName, Tag = customer.Id};
@@ -89,6 +83,7 @@ namespace LudicrousDemo.Client
                 LastName = LastName.Text,
                 UserName = UserName.Text
             };
+
             var client = new JsonServiceClient(BaseUrl);
             if (CurrentId != default(long))
                 client.Post(customer);
@@ -109,7 +104,8 @@ namespace LudicrousDemo.Client
             if (CurrentId == default(long)) return;
 
             var client = new JsonServiceClient(BaseUrl);
-            client.Delete<Customer>(new Customer {Id = CurrentId});
+            client.Delete(new Customer {Id = CurrentId});
+
             RefereshCustomerList();
         }
 

@@ -2,6 +2,7 @@
 
 namespace LudicrousDemo.Common
 {
+    [Route("/customer")]
     [Route("/customer/{id}")]
     public class Customer : IReturn<Customer>
     {
